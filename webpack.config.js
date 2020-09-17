@@ -1,5 +1,5 @@
 const path = require('path');
-
+const CopyPlugin = require('copy-webpack-plugin');
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 module.exports = {
@@ -23,5 +23,12 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                { from: 'src/types.d.ts' }
+            ]
+        })
+    ]
 };
