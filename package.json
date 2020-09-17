@@ -1,5 +1,5 @@
 {
-  "name": "reactivelite",
+  "name": "reactive-light",
   "version": "1.0.0",
   "author": "Amir Goren <amir602@gmail.com>",
   "license": "MIT",
@@ -25,14 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gorenamir/reactivelite.git"
+    "url": "git+https://github.com/gorenamir/reactive-light.git"
   },
   "keywords": [
     "reactivity",
     "lightweight"
   ],
   "bugs": {
-    "url": "https://github.com/gorenamir/reactivelite/issues"
+    "url": "https://github.com/gorenamir/reactive-light/issues"
   },
-  "homepage": "https://github.com/gorenamir/reactivelite#readme"
+  "homepage": "https://github.com/gorenamir/reactive-light#readme"
 }

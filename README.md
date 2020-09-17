@@ -1,23 +1,23 @@
-# reactivelite
+# reactive-light
 
-reactivelite is a lightweight JavaScript reactivity system.
+reactive-light is a lightweight JavaScript reactivity system.
 
 ## Installation
 
 ```bash
-npm install reactivelite
+npm install reactive-light
 ```
 
 or
 
 ```bash
-yarn add reactivelite
+yarn add reactive-light
 ```
 
 ## Usage
 
 ```javascript
-import { ref, computed, watch, watchEffect } from 'reactivelite';
+import { ref, computed, watch, watchEffect } from 'reactive-light';
 
 const counter = ref(0);
 const twoTimesCounter = computed(() => counter.value * 2);
