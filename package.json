@@ -1,8 +1,15 @@
 {
   "name": "reactivelite",
   "version": "1.0.0",
+  "author": "Amir Goren <amir602@gmail.com>",
+  "license": "MIT",
   "description": "A lightweight JavaScript reactivity system",
   "main": "dist/index.js",
+  "files": [
+    "src/",
+    "dist/",
+    "package.json"
+  ],
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
@@ -22,8 +29,6 @@
     "reactivity",
     "lightweight"
   ],
-  "author": "Amir Goren <amir602@gmail.com>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gorenamir/reactivelite/issues"
   },
