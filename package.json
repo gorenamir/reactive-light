@@ -1,6 +1,6 @@
 {
   "name": "reactive-light",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Amir Goren <amir602@gmail.com>",
   "license": "MIT",
   "description": "A lightweight JavaScript reactivity system",
@@ -9,7 +9,8 @@
   "files": [
     "src/",
     "dist/",
-    "package.json"
+    "package.json",
+    "CHANGELOG.md"
   ],
   "devDependencies": {
     "@babel/core": "^7.11.6",
