@@ -26,7 +26,7 @@ test('watch functionality works', () => {
 });
 
 test('watchEffect works', () => {
-    let msg = ref('hello, world!');
+    const msg = ref('hello, world!');
     let numOfInvocations = 0;
     watchEffect(() => {
         let rawMsg = msg.value;
