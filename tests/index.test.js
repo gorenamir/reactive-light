@@ -29,7 +29,7 @@ test('watchEffect works', () => {
     const msg = ref('hello, world!');
     let numOfInvocations = 0;
     watchEffect(() => {
-        let rawMsg = msg.value;
+        const rawMsg = msg.value;
         numOfInvocations++;
     });
     msg.value += '!';
