@@ -19,6 +19,7 @@
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^6.1.0",
+    "cross-env": "^7.0.2",
     "del-cli": "^3.0.1",
     "jest": "^26.4.2",
     "webpack": "^4.44.1",
@@ -26,7 +27,7 @@
   },
   "scripts": {
     "build-dev": "webpack",
-    "build": "NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "test": "jest",
     "delete": "del-cli --force ./dist",
     "release": "npm run delete && npm run build && npm publish"
