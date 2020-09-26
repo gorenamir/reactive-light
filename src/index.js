@@ -94,6 +94,55 @@ function computed(cb) {
     return new Computed(cb);
 }
 
+const reactiveHandler = {
+    get(obj, prop) {
+        let deps = depsMap.get(obj);
+
+        if (deps === undefined) {
+            deps = new Deps();
+            depsMap.set(obj, deps);
+        }
+
+        if (updaterFunction !== null) {
+            deps.add(updaterFunction);
+        }
+
+        return obj[prop];
+    },
+    set(obj, prop, value) {
+        if (value instanceof Object) {
+            obj[prop] = reactive(value);
+        } else {
+            obj[prop] = value;
+        }
+        const deps = depsMap.get(obj);
+        if (deps !== undefined) {
+            deps.notify(obj);
+        }
+        return true;
+    },
+    deleteProperty(obj, prop) {
+        if (obj.hasOwnProperty(prop)) {
+            delete obj[prop];
+            const deps = depsMap.get(obj);
+            if (deps !== undefined) {
+                deps.notify(obj);
+            }
+        }
+        return true;
+    }
+};
+
+function reactive(obj) {
+    const objCopy = Object.assign({}, obj);
+    for (const key in objCopy) {
+        if (objCopy.hasOwnProperty(key) && (objCopy[key] instanceof Object)) {
+            objCopy[key] = reactive(objCopy[key]);
+        }
+    }
+    return new Proxy(objCopy, reactiveHandler);
+}
+
 function watchEffect(cb) {
     const oldUpdaterFunction = updaterFunction;
     updaterFunction = cb;
@@ -114,4 +163,4 @@ function watch(whatToWatch, cb) {
     updaterFunction = oldUpdaterFunction;
 }
 
-export { ref, computed, watch, watchEffect };
+export { ref, computed, reactive, watch, watchEffect };

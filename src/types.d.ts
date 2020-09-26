@@ -10,8 +10,10 @@ declare class Computed<T = any> {
 
 declare function computed<T = any>(cb: () => T): Computed<T>
 
+declare function reactive<T extends object>(state: T): T;
+
 declare function watchEffect(cb: () => void): void
 
 declare function watch<T = any>(whatToWatch: () => T, handler: (newVal: T, previousVal: T) => void): void
 
-export { ref, computed, watchEffect, watch };
+export { ref, computed, reactive, watch, watchEffect };

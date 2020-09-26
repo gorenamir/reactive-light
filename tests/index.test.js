@@ -1,4 +1,4 @@
-import { ref, computed, watch, watchEffect } from '../src/index';
+import { ref, computed, reactive, watch, watchEffect } from '../src/index';
 
 test('computed functionality works', () => {
     const counter = ref(0);
@@ -37,4 +37,48 @@ test('watchEffect works', () => {
     msg.value += '!';
 
     expect(numOfInvocations).toBe(4);
+});
+
+test('reactive functionality works', () => {
+    const state = reactive({
+        counter: 0,
+        user: { name: 'Amir' }
+    })
+
+    let numOfInvocations = 0;
+    watchEffect(() => {
+        const counter = state.counter;
+        const name = state.user.name;
+        numOfInvocations++;
+    });
+
+    state.counter++;
+    state.counter--;
+    state.counter++;
+    expect(numOfInvocations).toBe(4);
+
+    state.user.name += ' Goren';
+    expect(numOfInvocations).toBe(5);
+
+    state.user.age = 27;
+    expect(numOfInvocations).toBe(6);
+
+    state.user.contact = {
+        phone: '+972-3555-4265'
+    };
+    expect(numOfInvocations).toBe(7);
+
+    watchEffect(() => {
+        const phone = state.user.contact.phone;
+        numOfInvocations++;
+    })
+    expect(numOfInvocations).toBe(8);
+
+    state.user.contact.phone = '+972-3555-5497';
+    expect(numOfInvocations).toBe(9);
+
+    delete state.user.contact.phone;
+    expect(numOfInvocations).toBe(10);
+
+    expect(state.user.contact.phone).toBeUndefined();
 });
