@@ -38,7 +38,7 @@ watch(
     (newMsg, oldMsg) => console.log('message changed!')
 );
 
-setTimeout(() => { state.msg = 'new messsge!'; }, 5000);
+setTimeout(() => { state.msg = 'new message!'; }, 5000);
 ```
 
 ## Contributing
