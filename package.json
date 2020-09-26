@@ -1,6 +1,6 @@
 {
   "name": "reactive-light",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Amir Goren <amir602@gmail.com>",
   "license": "MIT",
   "description": "A lightweight JavaScript reactivity system",
