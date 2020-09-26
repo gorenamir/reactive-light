@@ -3,13 +3,11 @@ const depsMap = new WeakMap();
 
 class Deps {
     constructor() {
-        this.deps = [];
+        this.deps = new Set();
     }
 
     add(f) {
-        if (! this.deps.includes(f)) {
-            this.deps.push(f);
-        }
+        this.deps.add(f);
     }
 
     notify(obj) {
