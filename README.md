@@ -17,7 +17,7 @@ yarn add reactive-light
 ## Usage
 
 ```javascript
-import { ref, computed, watch, watchEffect } from 'reactive-light';
+import { ref, computed, reactive, watch, watchEffect } from 'reactive-light';
 
 const counter = ref(0);
 const twoTimesCounter = computed(() => counter.value * 2);
@@ -29,14 +29,16 @@ watchEffect(() => {
 setInterval(() => { counter.value++; }, 1000);
 
 
-const msg = ref('hello, world!');
+const state = reactive({
+    msg: 'hello, world!'
+});
 
 watch(
-    () => msg.value,
+    () => state.msg,
     (newMsg, oldMsg) => console.log('message changed!')
 );
 
-setTimeout(() => { msg.value = 'new messsge!'; }, 5000);
+setTimeout(() => { state.msg = 'new messsge!'; }, 5000);
 ```
 
 ## Contributing

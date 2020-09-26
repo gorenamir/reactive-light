@@ -56,29 +56,43 @@ test('reactive functionality works', () => {
     state.counter--;
     state.counter++;
     expect(numOfInvocations).toBe(4);
+    expect(state.counter).toBe(1);
 
     state.user.name += ' Goren';
     expect(numOfInvocations).toBe(5);
+    expect(state.user.name).toBe('Amir Goren');
 
-    state.user.age = 27;
+    state.user.age = 26;
     expect(numOfInvocations).toBe(6);
+
+    state.user.age++;
+    expect(numOfInvocations).toBe(7);
+    expect(state.user.age).toBe(27);
 
     state.user.contact = {
         phone: '+972-3555-4265'
     };
-    expect(numOfInvocations).toBe(7);
+    expect(numOfInvocations).toBe(8);
 
     watchEffect(() => {
         const phone = state.user.contact.phone;
         numOfInvocations++;
     })
-    expect(numOfInvocations).toBe(8);
-
-    state.user.contact.phone = '+972-3555-5497';
     expect(numOfInvocations).toBe(9);
 
-    delete state.user.contact.phone;
+    state.user.contact.phone = '+972-3555-5497';
     expect(numOfInvocations).toBe(10);
 
+    delete state.user.contact.phone;
+    expect(numOfInvocations).toBe(11);
     expect(state.user.contact.phone).toBeUndefined();
+
+    watch(
+        () => state.user.name,
+        (newName, oldName) => {
+            expect(newName).toBe('Yoav Cohen');
+            expect(oldName).toBe('Amir Goren');
+        }
+    );
+    state.user.name = 'Yoav Cohen';
 });
