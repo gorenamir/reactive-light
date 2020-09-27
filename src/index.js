@@ -110,7 +110,7 @@ const reactiveHandler = {
         return obj[prop];
     },
     set(obj, prop, value) {
-        if (value instanceof Object) {
+        if (isObject(value)) {
             obj[prop] = reactive(value);
         } else {
             obj[prop] = value;
@@ -136,7 +136,7 @@ const reactiveHandler = {
 function reactive(obj) {
     const objCopy = Object.assign({}, obj);
     for (const key in objCopy) {
-        if (objCopy.hasOwnProperty(key) && (objCopy[key] instanceof Object)) {
+        if (objCopy.hasOwnProperty(key) && (isObject(objCopy[key]))) {
             objCopy[key] = reactive(objCopy[key]);
         }
     }
@@ -161,6 +161,14 @@ function watch(whatToWatch, cb) {
     };
     let val = whatToWatch();
     updaterFunction = oldUpdaterFunction;
+}
+
+function isObject(value) {
+    if (value === null) {
+        return false;
+    }
+    const type = (typeof value);
+    return type === 'object' || type === 'function';
 }
 
 export { ref, computed, reactive, watch, watchEffect };
