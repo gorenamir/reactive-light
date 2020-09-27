@@ -134,7 +134,7 @@ const reactiveHandler = {
 };
 
 function reactive(obj) {
-    const objCopy = Object.assign({}, obj);
+    const objCopy = { ...obj };
     for (const key in objCopy) {
         if (objCopy.hasOwnProperty(key) && (isObject(objCopy[key]))) {
             objCopy[key] = reactive(objCopy[key]);
