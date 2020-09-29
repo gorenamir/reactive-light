@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.5 (2020-09-29)
+
+use spread operator to copy object instead of Object.assign().
+
 ## 1.0.4 (2020-09-27)
 
 Bug fix - check if value is an object correctly.
