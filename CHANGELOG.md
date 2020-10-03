@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.7
+
+add support for use as Node.js module.
+
 ## 1.0.6 (2020-09-39)
 
 coding style fixes.
