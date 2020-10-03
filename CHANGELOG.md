@@ -2,11 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.7
+## 1.0.8 (2020-10-03)
+
+license file added.
+
+## 1.0.7 (2020-10-03)
 
 add support for use as Node.js module.
 
-## 1.0.6 (2020-09-39)
+## 1.0.6 (2020-09-30)
 
 coding style fixes.
 
