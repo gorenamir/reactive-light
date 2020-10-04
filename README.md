@@ -17,7 +17,8 @@ yarn add reactive-light
 ## Usage
 
 ```javascript
-import { ref, computed, reactive, watch, watchEffect } from 'reactive-light';
+import { ref, computed, reactive, watch, watchEffect } from 'reactive-light'; // in browser
+const { ref, computed, reactive, watch, watchEffect } = require('reactive-light'); // Node.js
 
 const counter = ref(0);
 const twoTimesCounter = computed(() => counter.value * 2);
