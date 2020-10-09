@@ -150,17 +150,45 @@ function watchEffect(cb) {
     updaterFunction = oldUpdaterFunction;
 }
 
-function watch(whatToWatch, cb) {
+function watch(whatToWatch, cb, deep = false) {
     const oldUpdaterFunction = updaterFunction;
     updaterFunction = () => {
         const newVal = whatToWatch();
         if (newVal !== val) {
             cb(newVal, val);
             val = newVal;
+            if (isObject(val) && deep) {
+                setDeepWatch(val, whatToWatch, cb);
+            }
         }
     };
     let val = whatToWatch();
+    if (isObject(val) && deep) {
+        setDeepWatch(val, whatToWatch, cb);
+    }
     updaterFunction = oldUpdaterFunction;
+}
+
+function setDeepWatch(obj, whatToWatch, cb) {
+    const oldUpdaterFunction = updaterFunction;
+    updaterFunction = () => {
+        if (whatToWatch() === obj) {
+            cb(obj, obj);
+        }
+    };
+    accessObjectAndChildrenObjects(obj);
+    updaterFunction = oldUpdaterFunction;
+}
+
+const DUMMY_PROP = Symbol('DUMMY_PROP');
+
+function accessObjectAndChildrenObjects(obj) {
+    obj[DUMMY_PROP]; // access dummy prop on the object to manually trigger the get trap of the reactive object's Proxy
+    for (const key in obj) {
+        if (isObject(obj[key])) {
+            accessObjectAndChildrenObjects(obj[key]);
+        }
+    }
 }
 
 function isObject(value) {

@@ -14,6 +14,15 @@ declare function reactive<T extends object>(state: T): T;
 
 declare function watchEffect(cb: () => void): void
 
-declare function watch<T = any>(whatToWatch: () => T, handler: (newVal: T, previousVal: T) => void): void
+declare function watch<T = any>(
+    whatToWatch: () => T,
+    handler: (newVal: T, previousVal: T) => void
+): void
+
+declare function watch<T = any>(
+    whatToWatch: () => T,
+    handler: (newVal: T, previousVal: T) => void,
+    deep: boolean
+): void
 
 export { ref, computed, reactive, watch, watchEffect };

@@ -96,3 +96,53 @@ test('reactive functionality works', () => {
     );
     state.user.name = 'Yoav Cohen';
 });
+
+test('deep watch works', () => {
+    const state = reactive({
+        name: {
+            first: 'Amir',
+            last: 'Goren',
+        },
+        age: 26
+    });
+
+    let numOfInvocations = 0;
+
+    watch(
+        () => state,
+        () => { numOfInvocations++; },
+        true
+    );
+
+    state.age++;
+    expect(numOfInvocations).toBe(1);
+
+    state.name.first = 'Yoav';
+    expect(numOfInvocations).toBe(2);
+
+    const { name } = state;
+    name.last = 'Cohen';
+    expect(numOfInvocations).toBe(3);
+
+    const state1 = reactive({ name: 'state1' });
+    const state2 = reactive({ name: 'state2' });
+    const condition = ref(true);
+    watch(
+        () => condition.value ? state1 : state2,
+        () => { numOfInvocations++; },
+        true
+    )
+
+    state1.name = 'state1 new name';
+    expect(numOfInvocations).toBe(4);
+
+    condition.value = false;
+    expect(numOfInvocations).toBe(5);
+
+    state2.name = 'state2 new name';
+    expect(numOfInvocations).toBe(6);
+
+    // This is not supposed to trigger the watcher now
+    state1.name = 'state1 name changed again';
+    expect(numOfInvocations).toBe(6);
+});
