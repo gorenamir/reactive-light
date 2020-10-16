@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.11 (2020-10-16)
+
+classes rewritten using tha class fields experimental feature.
+
 ## 1.0.10 (2020-10-09)
 
 deep watch feature added.
