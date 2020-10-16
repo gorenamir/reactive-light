@@ -2,22 +2,24 @@ let updaterFunction = null;
 const depsMap = new WeakMap();
 
 class Deps {
-    constructor() {
-        this.deps = new Set();
-    }
+
+    #deps = new Set();
 
     add(f) {
-        this.deps.add(f);
+        this.#deps.add(f);
     }
 
     notify(obj) {
-        this.deps.forEach(func => { func(obj); });
+        this.#deps.forEach(func => { func(obj); });
     }
 }
 
 class Ref {
+
+    #internalValue = null;
+
     constructor(initialValue = null) {
-        this.internalValue = initialValue;
+        this.#internalValue = initialValue;
     }
 
     get value() {
@@ -32,11 +34,11 @@ class Ref {
             deps.add(updaterFunction);
         }
 
-        return this.internalValue;
+        return this.#internalValue;
     }
 
     set value(newVal) {
-        this.internalValue = newVal;
+        this.#internalValue = newVal;
         const deps = depsMap.get(this);
         if (deps !== undefined) {
             deps.notify(this);
@@ -50,11 +52,14 @@ function ref(initialValue = null) {
 }
 
 class Computed {
+
+    #cb = null;
+    #updaterFunction = null;
+    #cachedValue = null;
+    #calculated = false;
+
     constructor(cb) {
-        this.cb = cb;
-        this.updaterFunction = null;
-        this.cachedValue = null;
-        this.calculated = false;
+        this.#cb = cb;
     }
 
     get value() {
@@ -69,28 +74,31 @@ class Computed {
             deps.add(updaterFunction);
         }
 
-        if (this.updaterFunction === null) {
-            this.updaterFunction = () => {
-                const newValue = this.cb();
-                if (newValue !== this.cachedValue) {
-                    this.cachedValue = newValue;
+        if (this.#updaterFunction === null) {
+            this.#updaterFunction = () => {
+                const newValue = this.#cb();
+                if (newValue !== this.#cachedValue) {
+                    this.#cachedValue = newValue;
                     deps.notify(this);
                 }
             };
         }
 
         const oldUpdaterFunction = updaterFunction;
-        updaterFunction = this.updaterFunction;
-        if (! this.calculated) {
-            this.cachedValue = this.cb();
-            this.calculated = true;
+        updaterFunction = this.#updaterFunction;
+        if (! this.#calculated) {
+            this.#cachedValue = this.#cb();
+            this.#calculated = true;
         }
         updaterFunction = oldUpdaterFunction;
-        return this.cachedValue;
+        return this.#cachedValue;
     }
 }
 
 function computed(cb) {
+    if (typeof cb !== 'function') {
+        throw new TypeError('Argument is not a function.');
+    }
     return new Computed(cb);
 }
 
